@@ -12,11 +12,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-notion-x": "latest",
-    "notion-client": "latest",
-    "react-notion-x/build/third-party/code": "latest",
-    "react-notion-x/build/third-party/collection": "latest",
-    "react-notion-x/build/third-party/equation": "latest",
-    "react-notion-x/build/third-party/pdf": "latest",
-    "react-notion-x/build/third-party/modal": "latest"
+    "notion-client": "latest"
   }
 }
