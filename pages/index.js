@@ -1,8 +1,8 @@
 import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
-
-// グローバルCSSは _app.js で読み込み済み
+import '../styles/globals.css';
+import { useState, useEffect } from 'react';
 
 // ギャラリービュー用コンポーネント
 const Collection = dynamic(() =>
@@ -33,30 +33,55 @@ export async function getStaticProps() {
 }
 
 export default function Home({ recordMap }) {
+  const [titles, setTitles] = useState([]);
+
+  useEffect(() => {
+    // タイトルを収集
+    const extractedTitles = [];
+    Object.values(recordMap?.block || {}).forEach((block) => {
+      if (block.value?.type === 'page') {
+        extractedTitles.push({
+          id: block.value.id,
+          title: block.value.properties?.title?.[0]?.[0] || 'Untitled',
+        });
+      }
+    });
+    setTitles(extractedTitles);
+  }, [recordMap]);
+
   return (
     <div>
-      {/* ヘッダー */}
-      <header className="header">
-        <h1>My Notion Portfolio 🚀</h1>
-      </header>
+      {/* 📋 サイドバー */}
+      <aside className="sidebar">
+        <h2>メニュー</h2>
+        <ul>
+          {titles.map((item) => (
+            <li key={item.id}>
+              <a href={`#${item.id}`}>{item.title}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
-      {/* Notionデータの表示 */}
-      <NotionRenderer
-        recordMap={recordMap}
-        fullPage={true}
-        darkMode={false}
-        components={{
-          Collection,
-          Equation,
-          Pdf,
-          Modal
-        }}
-      />
+      {/* 🖼️ メインコンテンツ */}
+      <main className="main-content">
+        <header className="header">
+          <h1>My Notion Portfolio 🚀</h1>
+        </header>
 
-      {/* フッター */}
-      <footer className="footer">
-        <p>&copy; 2025 My Portfolio</p>
-      </footer>
+        <div>
+          {titles.map((item) => (
+            <div className="notion-collection-card" id={item.id} key={item.id}>
+              <img src={`https://www.notion.so/image/${item.id}`} alt={item.title} />
+              <div className="notion-collection-card-title">{item.title}</div>
+            </div>
+          ))}
+        </div>
+
+        <footer className="footer">
+          <p>&copy; 2025 My Portfolio</p>
+        </footer>
+      </main>
     </div>
   );
 }
