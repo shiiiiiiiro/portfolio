@@ -62,3 +62,22 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* 🚫 初期状態では非表示 */
+.notion-collection-card-title {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* 🖱️ ホバー時に表示 */
+.notion-collection-card:hover .notion-collection-card-title {
+  display: block;
+}
