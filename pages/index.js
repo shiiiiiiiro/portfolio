@@ -2,8 +2,9 @@ import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
 import 'react-notion-x/src/styles.css';
+import '../styles/globals.css';
 
-// ギャラリーやメディア用のコンポーネントを動的に読み込み
+// ギャラリービュー用コンポーネント
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then(m => m.Collection)
 );
@@ -34,7 +35,12 @@ export async function getStaticProps() {
 export default function Home({ recordMap }) {
   return (
     <div>
-      <h1>My Notion Portfolio 🚀</h1>
+      {/* 🟦 ヘッダー */}
+      <header className="header">
+        <h1>My Notion Portfolio 🚀</h1>
+      </header>
+
+      {/* 🖼️ Notionデータの表示 */}
       <NotionRenderer
         recordMap={recordMap}
         fullPage={true}
@@ -46,6 +52,11 @@ export default function Home({ recordMap }) {
           Modal
         }}
       />
+
+      {/* 🟦 フッター */}
+      <footer className="footer">
+        <p>&copy; 2025 My Portfolio</p>
+      </footer>
     </div>
   );
 }
