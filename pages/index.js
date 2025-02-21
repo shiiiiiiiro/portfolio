@@ -1,8 +1,8 @@
 import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
-
-// グローバルCSSは _app.js で読み込み済み
+import Link from 'next/link';
+import '../styles/globals.css';
 
 // ギャラリービュー用コンポーネント
 const Collection = dynamic(() =>
@@ -40,18 +40,25 @@ export default function Home({ recordMap }) {
         <h1>My Notion Portfolio 🚀</h1>
       </header>
 
-      {/* Notionデータの表示 */}
-      <NotionRenderer
-        recordMap={recordMap}
-        fullPage={true}
-        darkMode={false}
-        components={{
-          Collection,
-          Equation,
-          Pdf,
-          Modal
-        }}
-      />
+      {/* ギャラリービュー */}
+      <div className="gallery">
+        {Object.keys(recordMap.block).map((key) => {
+          const block = recordMap.block[key].value;
+          if (block.type === 'page') {
+            const title = block.properties?.title?.[0]?.[0] || 'Untitled';
+            const pageId = block.id.replace(/-/g, '');
+            const imageUrl = `https://www.notion.so/image/${encodeURIComponent(block.format?.page_cover || '')}?table=block&id=${block.id}&cache=v2`;
+
+            return (
+              <Link href={`/page/${pageId}`} key={block.id}>
+                <a className="notion-collection-card">
+                  <img src={imageUrl} alt={title} />
+                </a>
+              </Link>
+            );
+          }
+        })}
+      </div>
 
       {/* フッター */}
       <footer className="footer">
