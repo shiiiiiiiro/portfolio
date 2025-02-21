@@ -1,7 +1,7 @@
 import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
+import { useState } from 'react';
 import '../styles/globals.css';
 
 // ギャラリービュー用コンポーネント
@@ -33,6 +33,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ recordMap }) {
+  const [modalImage, setModalImage] = useState(null);
+
   return (
     <div>
       {/* ヘッダー */}
@@ -40,30 +42,63 @@ export default function Home({ recordMap }) {
         <h1>My Notion Portfolio 🚀</h1>
       </header>
 
-      {/* ギャラリービュー */}
+      {/* ギャラリー */}
       <div className="gallery">
         {Object.keys(recordMap.block).map((key) => {
           const block = recordMap.block[key].value;
           if (block.type === 'page') {
-            const title = block.properties?.title?.[0]?.[0] || 'Untitled';
-            const pageId = block.id.replace(/-/g, '');
             const imageUrl = `https://www.notion.so/image/${encodeURIComponent(block.format?.page_cover || '')}?table=block&id=${block.id}&cache=v2`;
 
             return (
-              <Link href={`/page/${pageId}`} key={block.id}>
-                <a className="notion-collection-card">
-                  <img src={imageUrl} alt={title} />
-                </a>
-              </Link>
+              <div
+                key={block.id}
+                className="notion-collection-card"
+                onClick={() => setModalImage(imageUrl)}
+              >
+                <img src={imageUrl} alt="Thumbnail" />
+              </div>
             );
           }
         })}
       </div>
 
-      {/* フッター */}
+      {/* モーダル表示 */}
+      {modalImage && (
+        <div className="modal" onClick={() => setModalImage(null)}>
+          <img src={modalImage} alt="Full View" />
+        </div>
+      )}
+
       <footer className="footer">
         <p>&copy; 2025 My Portfolio</p>
       </footer>
+
+      {/* モーダル用スタイル */}
+      <style jsx>{`
+        .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        .modal img {
+          max-width: 90%;
+          max-height: 90%;
+          border-radius: 12px;
+          box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .modal:hover {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 }
