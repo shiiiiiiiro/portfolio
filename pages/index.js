@@ -2,7 +2,6 @@ import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import '../styles/globals.css';
 
 // ギャラリービュー用コンポーネント
 const Collection = dynamic(() =>
