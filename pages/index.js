@@ -1,7 +1,6 @@
 import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
-import '../styles/globals.css';
 import { useState, useEffect } from 'react';
 
 // ギャラリービュー用コンポーネント
