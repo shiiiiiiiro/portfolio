@@ -82,19 +82,15 @@ body {
   display: block;
 }
 
-/* 🚫 カードのタイトルを非表示 */
-.notion-collection-card-title {
+/* 🚫 カードのタイトルを完全に非表示 */
+.notion-collection-card .notion-collection-card-title,
+.notion-page-link span,
+.notion-page-icon,
+.notion-page-title {
   display: none !important;
 }
 
-/* 🖼️ カード下部の余白を削除 */
-.notion-collection-card {
-  padding: 0;
-  margin: 0;
-  height: auto;
-}
-
-/* 🖼️ 画像のサイズを調整して隙間を詰める */
+/* 🖼️ 画像だけを表示 */
 .notion-collection-card img {
   width: 100%;
   height: 100%;
@@ -102,12 +98,20 @@ body {
   border-radius: 12px;
 }
 
-/* 💡 カード全体の余白を縮小 */
+/* 🧱 カード下部の余白をゼロに */
 .notion-collection-card {
-  margin-bottom: 8px; /* 必要なら調整可能 */
+  padding: 0;
+  margin: 0;
+  height: auto;
+  border: none;
 }
 
-/* 📋 不要なスペースを削除 */
+/* 💡 カード全体の余白を縮小 */
+.notion-collection-card {
+  margin-bottom: 8px;
+}
+
+/* 📋 不要なスペース削除 */
 .notion-collection-card > div {
   padding: 0 !important;
 }
