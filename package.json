@@ -1,12 +1,22 @@
-"dependencies": {
-  "next": "latest",
-  "react": "18.2.0",
-  "react-dom": "18.2.0",
-  "react-notion-x": "latest",
-  "notion-client": "latest",
-  "react-notion-x/build/third-party/code": "latest",
-  "react-notion-x/build/third-party/collection": "latest",
-  "react-notion-x/build/third-party/equation": "latest",
-  "react-notion-x/build/third-party/pdf": "latest",
-  "react-notion-x/build/third-party/modal": "latest"
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-notion-x": "latest",
+    "notion-client": "latest",
+    "react-notion-x/build/third-party/code": "latest",
+    "react-notion-x/build/third-party/collection": "latest",
+    "react-notion-x/build/third-party/equation": "latest",
+    "react-notion-x/build/third-party/pdf": "latest",
+    "react-notion-x/build/third-party/modal": "latest"
+  }
 }
