@@ -1,6 +1,7 @@
 import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
+import '../styles/globals.css';
 
 // ギャラリービュー用コンポーネント
 const Collection = dynamic(() =>
@@ -33,12 +34,12 @@ export async function getStaticProps() {
 export default function Home({ recordMap }) {
   return (
     <div>
-      {/* ヘッダー */}
+      {/* 🟦 ヘッダー */}
       <header className="header">
         <h1>My Notion Portfolio 🚀</h1>
       </header>
 
-      {/* Notionデータの表示 */}
+      {/* 🖼️ Notionデータの表示 */}
       <NotionRenderer
         recordMap={recordMap}
         fullPage={true}
@@ -51,7 +52,7 @@ export default function Home({ recordMap }) {
         }}
       />
 
-      {/* フッター */}
+      {/* 🟦 フッター */}
       <footer className="footer">
         <p>&copy; 2025 My Portfolio</p>
       </footer>
