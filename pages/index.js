@@ -1,6 +1,6 @@
 import { NotionAPI } from 'notion-client';
 import { useState } from 'react';
-import '../styles/globals.css';
+
 
 export async function getStaticProps() {
   const notion = new NotionAPI();
