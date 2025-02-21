@@ -81,3 +81,33 @@ body {
 .notion-collection-card:hover .notion-collection-card-title {
   display: block;
 }
+
+/* 🚫 カードのタイトルを非表示 */
+.notion-collection-card-title {
+  display: none !important;
+}
+
+/* 🖼️ カード下部の余白を削除 */
+.notion-collection-card {
+  padding: 0;
+  margin: 0;
+  height: auto;
+}
+
+/* 🖼️ 画像のサイズを調整して隙間を詰める */
+.notion-collection-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 💡 カード全体の余白を縮小 */
+.notion-collection-card {
+  margin-bottom: 8px; /* 必要なら調整可能 */
+}
+
+/* 📋 不要なスペースを削除 */
+.notion-collection-card > div {
+  padding: 0 !important;
+}
