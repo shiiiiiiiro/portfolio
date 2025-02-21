@@ -1,21 +1,6 @@
 import { NotionAPI } from 'notion-client';
-import { NotionRenderer } from 'react-notion-x';
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
-
-// ギャラリービュー用コンポーネント
-const Collection = dynamic(() =>
-  import('react-notion-x/build/third-party/collection').then(m => m.Collection)
-);
-const Equation = dynamic(() =>
-  import('react-notion-x/build/third-party/equation').then(m => m.Equation)
-);
-const Pdf = dynamic(() =>
-  import('react-notion-x/build/third-party/pdf').then(m => m.Pdf), { ssr: false }
-);
-const Modal = dynamic(() =>
-  import('react-notion-x/build/third-party/modal').then(m => m.Modal), { ssr: false }
-);
+import '../styles/globals.css';
 
 export async function getStaticProps() {
   const notion = new NotionAPI();
@@ -44,9 +29,13 @@ export default function Home({ recordMap }) {
       {/* ギャラリー */}
       <div className="gallery">
         {Object.keys(recordMap.block).map((key) => {
-          const block = recordMap.block[key].value;
-          if (block.type === 'page') {
-            const imageUrl = `https://www.notion.so/image/${encodeURIComponent(block.format?.page_cover || '')}?table=block&id=${block.id}&cache=v2`;
+          const block = recordMap.block[key]?.value;
+          if (block?.type === 'page') {
+            const title = block?.properties?.title?.[0]?.[0] || 'Untitled';
+            const pageCover = block?.format?.page_cover;
+            const imageUrl = pageCover
+              ? `https://www.notion.so/image/${encodeURIComponent(pageCover)}?table=block&id=${block.id}&cache=v2`
+              : '/default-thumbnail.png'; // サムネがない場合のデフォルト
 
             return (
               <div
@@ -54,7 +43,7 @@ export default function Home({ recordMap }) {
                 className="notion-collection-card"
                 onClick={() => setModalImage(imageUrl)}
               >
-                <img src={imageUrl} alt="Thumbnail" />
+                <img src={imageUrl} alt={title} />
               </div>
             );
           }
@@ -72,8 +61,30 @@ export default function Home({ recordMap }) {
         <p>&copy; 2025 My Portfolio</p>
       </footer>
 
-      {/* モーダル用スタイル */}
+      {/* モーダルとギャラリー用スタイル */}
       <style jsx>{`
+        .gallery {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          justify-content: center;
+        }
+
+        .notion-collection-card {
+          width: 200px;
+          height: 200px;
+          overflow: hidden;
+          border-radius: 12px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          cursor: pointer;
+        }
+
+        .notion-collection-card img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
         .modal {
           position: fixed;
           top: 0;
@@ -91,11 +102,6 @@ export default function Home({ recordMap }) {
           max-width: 90%;
           max-height: 90%;
           border-radius: 12px;
-          box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-        }
-
-        .modal:hover {
-          cursor: pointer;
         }
       `}</style>
     </div>
