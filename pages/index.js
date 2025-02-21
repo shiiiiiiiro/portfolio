@@ -3,7 +3,7 @@ import { NotionRenderer } from 'react-notion-x';
 import dynamic from 'next/dynamic';
 import 'react-notion-x/src/styles.css';
 
-// ギャラリーやメディア用のコンポーネントを読み込み
+// ギャラリーやメディア用のコンポーネントを動的に読み込み
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then(m => m.Collection)
 );
